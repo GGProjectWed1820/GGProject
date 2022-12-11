@@ -4,6 +4,7 @@ import networkx as nx
 import pytest
 
 from src.productions.production1 import Production1
+from src.productions.production2 import Production2
 from src.vertex_params import VertexParams, VertexType
 
 
@@ -24,4 +25,9 @@ def start_graph():
 @pytest.fixture
 def production1():
     return Production1()
+
+
+@pytest.fixture
+def production2():
+    return Production2()
 
