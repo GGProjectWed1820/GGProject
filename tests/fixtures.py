@@ -24,6 +24,7 @@ def _are_graphs_isomorphic(graph1: nx.Graph, graph2: nx.Graph) -> bool:
         node_match=_are_nodes_equal
     )
 
+
 @pytest.fixture
 def start_graph():
     graph = nx.Graph()
@@ -32,6 +33,20 @@ def start_graph():
             0,
             dataclasses.asdict(
                 VertexParams(vertex_type=VertexType.START, position=(0.5, 0.5), level=0)
+            ),
+        )]
+    )
+    return graph
+
+
+@pytest.fixture
+def incorrect_start_graph():
+    graph = nx.Graph()
+    graph.add_nodes_from(
+        [(
+            0,
+            dataclasses.asdict(
+                VertexParams(vertex_type=VertexType.EXTERIOR, position=(0.5, 0.5), level=0)
             ),
         )]
     )
