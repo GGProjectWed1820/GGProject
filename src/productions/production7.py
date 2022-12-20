@@ -73,7 +73,6 @@ class Production7(Production):
 
             for SG in (graph.subgraph(selected_nodes) for selected_nodes in
                        itertools.combinations(graph, len(isomorphic_graph))):
-                print(SG)
                 if nx.is_connected(SG):
                     all_connected_subgraphs.append(SG)
 
