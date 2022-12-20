@@ -62,9 +62,16 @@ def production1():
 def production2():
     return Production2()
 
+
+@pytest.fixture
+def production5():
+    return Production6()
+
+
 @pytest.fixture
 def production6():
     return Production6()
+
 
 @pytest.fixture
 def production10():
