@@ -2,12 +2,22 @@ from dataclasses import asdict
 
 from src.vertex_params import VertexParams, VertexType
 
-from tests.fixtures import start_graph, incorrect_start_graph, production1
+from tests.fixtures import start_graph, start_graph2, incorrect_start_graph, production1
 
 
 def test_finds_first_element_in_start_graph(start_graph, production1):
     # when
     subgraph = production1.find_isomorphic_to_left_side(start_graph)
+
+    # then
+    assert subgraph is not None
+    assert len(subgraph.nodes) == 1
+    assert VertexParams(**subgraph.nodes[0]).vertex_type == VertexType.START
+
+
+def test_finds_first_element_in_start_graph2(start_graph2, production1):
+    # when
+    subgraph = production1.find_isomorphic_to_left_side(start_graph2)
 
     # then
     assert subgraph is not None
