@@ -6,6 +6,7 @@ import pytest
 from src.productions.production1 import Production1
 from src.productions.production10 import Production10
 from src.productions.production2 import Production2
+from src.productions.production5 import Production5
 from src.productions.production6 import Production6
 from src.productions.production7 import Production7
 from src.vertex_params import VertexParams, VertexType
@@ -68,6 +69,10 @@ def production2():
 @pytest.fixture
 def production6():
     return Production6()
+
+@pytest.fixture
+def production5():
+    return Production5()
 
 
 @pytest.fixture
