@@ -491,6 +491,7 @@ def graph_for_p10():
             (13, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 2)),
             (14, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 2)),
             (15, mk_vertex(VertexType.EXTERIOR, (1.0, 1.0), 2)),
+            
 
             (16, mk_vertex(VertexType.INTERIOR, None, 2)),
         ]
@@ -539,6 +540,88 @@ def graph_for_p10():
             (13, 16),
             (14, 16),
             (15, 16),
+        ]
+    )
+    return graph
+
+
+@pytest.fixture
+def graph_for_p10_bigger():
+    graph = nx.Graph()
+    graph.add_nodes_from(
+        [
+            (0, mk_vertex(VertexType.START_USED, (0.5, 0.5), 0)),
+
+            (1, mk_vertex(VertexType.EXTERIOR, (0.0, 0.0), 1)),
+            (2, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 1)),
+            (3, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 1)),
+            (4, mk_vertex(VertexType.EXTERIOR, (1.0, 1.0), 1)),
+
+            (5, mk_vertex(VertexType.INTERIOR_USED, None, 1)),
+            (6, mk_vertex(VertexType.INTERIOR_USED, None, 1)),
+
+            (7, mk_vertex(VertexType.EXTERIOR, (0.0, 0.0), 2)),
+            (8, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 2)),
+            (9, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 2)),
+            (10, mk_vertex(VertexType.EXTERIOR, (0.5, 0.5), 2)),
+
+            (11, mk_vertex(VertexType.INTERIOR, None, 2)),
+            (12, mk_vertex(VertexType.INTERIOR, None, 2)),
+
+            (13, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 2)),
+            (14, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 2)),
+            (15, mk_vertex(VertexType.EXTERIOR, (1.0, 1.0), 2)),
+            (17, mk_vertex(VertexType.EXTERIOR, (1.5, 1.5), 2)),
+            
+
+            (16, mk_vertex(VertexType.INTERIOR, None, 2)),
+        ]
+    )
+
+    graph.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+            (3, 6),
+            (4, 6),
+
+            (7, 8),
+            (7, 9),
+            (7, 10),
+            (8, 10),
+            (9, 10),
+
+            (5, 11),
+            (5, 12),
+
+            (7, 11),
+            (7, 12),
+            (8, 11),
+            (9, 12),
+            (10, 11),
+            (10, 12),
+
+            (6, 16),
+
+            (13, 14),
+            (13, 15),
+            (14, 15),
+
+            (13, 16),
+            (14, 16),
+            (15, 16),
+            (15, 17)
         ]
     )
     return graph
@@ -749,6 +832,83 @@ def correct_graph_after_p10():
             (8, 16),
             (9, 16),
             (15, 16),
+        ]
+    )
+    return graph
+
+@pytest.fixture
+def correct_graph_after_p10_bigger():
+    graph = nx.Graph()
+    graph.add_nodes_from(
+        [
+            (0, mk_vertex(VertexType.START_USED, (0.5, 0.5), 0)),
+
+            (1, mk_vertex(VertexType.EXTERIOR, (0.0, 0.0), 1)),
+            (2, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 1)),
+            (3, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 1)),
+            (4, mk_vertex(VertexType.EXTERIOR, (1.0, 1.0), 1)),
+
+            (5, mk_vertex(VertexType.INTERIOR_USED, None, 1)),
+            (6, mk_vertex(VertexType.INTERIOR_USED, None, 1)),
+
+            (7, mk_vertex(VertexType.EXTERIOR, (0.0, 0.0), 2)),
+            (8, mk_vertex(VertexType.EXTERIOR, (0.0, 1.0), 2)),
+            (9, mk_vertex(VertexType.EXTERIOR, (1.0, 0.0), 2)),
+            (10, mk_vertex(VertexType.EXTERIOR, (0.5, 0.5), 2)),
+
+            (11, mk_vertex(VertexType.INTERIOR, None, 2)),
+            (12, mk_vertex(VertexType.INTERIOR, None, 2)),
+
+            (15, mk_vertex(VertexType.EXTERIOR, (1.0, 1.0), 2)),
+            (17, mk_vertex(VertexType.EXTERIOR, (1.5, 1.5), 2)),
+
+            (16, mk_vertex(VertexType.INTERIOR, None, 2)),
+        ]
+    )
+
+    graph.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+            (3, 6),
+            (4, 6),
+
+            (7, 8),
+            (7, 9),
+            (7, 10),
+            (8, 10),
+            (9, 10),
+
+            (5, 11),
+            (5, 12),
+
+            (7, 11),
+            (7, 12),
+            (8, 11),
+            (9, 12),
+            (10, 11),
+            (10, 12),
+
+            (6, 16),
+
+            (8, 15),
+            (9, 15),
+
+            (8, 16),
+            (9, 16),
+            (15, 16),
+            (15,17)
         ]
     )
     return graph
