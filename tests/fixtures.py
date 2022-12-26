@@ -43,6 +43,27 @@ def start_graph():
 
 
 @pytest.fixture
+def start_graph2():
+    graph = nx.Graph()
+    graph.add_nodes_from(
+        [(
+            0,
+            dataclasses.asdict(
+                VertexParams(vertex_type=VertexType.START, position=(0.5, 0.5), level=0)
+            ),
+        ),
+        (
+            1,
+            dataclasses.asdict(
+                VertexParams(vertex_type=VertexType.START, position=(1, 1), level=0)
+            ),
+        )]
+    )
+    graph.add_edges_from([(0, 1)])
+    return graph
+
+
+@pytest.fixture
 def incorrect_start_graph():
     graph = nx.Graph()
     graph.add_nodes_from(
