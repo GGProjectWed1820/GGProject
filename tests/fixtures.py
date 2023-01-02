@@ -6,6 +6,8 @@ import pytest
 from src.productions.production1 import Production1
 from src.productions.production10 import Production10
 from src.productions.production2 import Production2
+from src.productions.production3 import Production3
+from src.productions.production4 import Production4
 from src.productions.production5 import Production5
 from src.productions.production6 import Production6
 from src.productions.production7 import Production7
@@ -87,6 +89,13 @@ def production1():
 def production2():
     return Production2()
 
+@pytest.fixture
+def production3():
+    return Production3()
+
+@pytest.fixture
+def production4():
+    return Production4()
 
 @pytest.fixture
 def production6():
