@@ -131,6 +131,7 @@ class Production9(Production):
                 internal_node.params, vertex_type=VertexType.INTERIOR_USED
             ),
         )
+
         new_internal_node = Node(
             next_id_val_fun(),
             _get_params_with_lower_level([internal_node])[0]
@@ -146,7 +147,7 @@ class Production9(Production):
                 _get_params_with_lower_level(external_nodes),
             )
         )
-        new_level_nodes = new_nodes + [new_internal_node]
+        new_level_nodes = new_nodes + [used_internal_node, new_internal_node, ]
         new_level_raw_nodes = map(
             lambda node: (node.id, dataclasses.asdict(node.params)), new_level_nodes
         )
