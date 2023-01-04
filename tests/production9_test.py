@@ -63,5 +63,5 @@ def test_applies_to_graph_after_first_production(
     subgraph = production9.find_isomorphic_to_left_side(graph_after_first_production)
     graph_after_applying = production9.apply(graph_after_first_production, subgraph)
 
-    assert graph_after_applying.number_of_edges() == 18
+    assert graph_after_applying.number_of_edges() == 19
     assert _are_graphs_matching(graph_after_applying, graph_after_ninth_production)

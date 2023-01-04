@@ -1461,7 +1461,8 @@ def graph_after_ninth_production(start_graph, production9):
             (7, 8),
             (7, 9),
             (8, 9),
-            (8, 10)
+            (8, 10),
+            (10, 9)
         ]
     )
 
