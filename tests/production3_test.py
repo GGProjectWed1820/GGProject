@@ -4,7 +4,7 @@ import networkx as nx
 import pytest
 
 from src.vertex_params import VertexParams, VertexType
-from tests.fixtures import start_graph, production3
+from tests.fixtures import start_graph, production3, mk_vertex
 
 
 def _are_nodes_equal(node1, node2) -> bool:
@@ -578,3 +578,15 @@ def test_should_correctly_transform_bigger_graph(
     subgraph = production3.find_isomorphic_to_left_side(bigger_graph_for_p3_left_side)
     production_graph = production3.apply(bigger_graph_for_p3_left_side, subgraph)
     assert _are_graphs_isomorphic(bigger_graph_for_p3_right_side, production_graph)
+
+
+def test_should_not_transform_with_second_breaking_node_added(
+        correct_graph_for_left_side_p3,
+        correct_graph_for_p3_right_side,
+        production3
+):
+    correct_graph_for_left_side_p3.remove_edge(0, 1)
+    correct_graph_for_left_side_p3.add_nodes_from([(5, mk_vertex(VertexType.EXTERIOR, (0, 0.5), 0))])
+    correct_graph_for_left_side_p3.add_edges_from([(0, 5), (5, 1)])
+    subgraph = production3.find_isomorphic_to_left_side(correct_graph_for_left_side_p3)
+    assert subgraph is None
