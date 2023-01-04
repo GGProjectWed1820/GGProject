@@ -6,9 +6,13 @@ import pytest
 from src.productions.production1 import Production1
 from src.productions.production10 import Production10
 from src.productions.production2 import Production2
+from src.productions.production3 import Production3
+from src.productions.production4 import Production4
 from src.productions.production5 import Production5
 from src.productions.production6 import Production6
 from src.productions.production7 import Production7
+from src.productions.production8 import Production8
+from src.productions.production9 import Production9
 from src.vertex_params import VertexParams, VertexType
 
 
@@ -86,6 +90,13 @@ def production1():
 def production2():
     return Production2()
 
+@pytest.fixture
+def production3():
+    return Production3()
+
+@pytest.fixture
+def production4():
+    return Production4()
 
 @pytest.fixture
 def production6():
@@ -102,8 +113,455 @@ def production7():
 
 
 @pytest.fixture
+def production8():
+    return Production8()
+
+@pytest.fixture
+def production9():
+    return Production9()
+
+@pytest.fixture
 def production10():
     return Production10()
+
+@pytest.fixture
+def graph_after_first_production(start_graph, production1):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+
+        ]
+    )
+
+    return G
+
+
+@pytest.fixture
+def graph_after_first_production_wrong_node(start_graph, production1):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (2, 4),
+            (2, 5),
+            (5, 4),
+
+        ]
+    )
+
+    return G
+
+
+@pytest.fixture
+def graph_after_first_production_wrong_edge(start_graph, production1):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (2, 3),
+            (2, 4),
+            (2, 5),
+            (5, 4),
+            (3, 5),
+
+        ]
+    )
+
+    return G
+
+
+@pytest.fixture
+def graph_after_first_production_wrong_type(start_graph, production1):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+            (3, 6),
+            (4, 6),
+        ]
+    )
+
+    return G
+
+@pytest.fixture
+def graph_after_second_production(start_graph, production2):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                7,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                8,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                9,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                10,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.5, 0.5), level=2
+                    )
+                ),
+            ),
+            (
+                11,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=2
+                    )
+                ),
+            ),
+            (
+                12,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=2
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+            (3, 6),
+            (4, 6),
+            (5, 11),
+            (5, 12),
+            (7, 11),
+            (7, 12),
+            (10, 11),
+            (10, 12),
+            (7, 10),
+            (7, 8),
+            (7, 9),
+            (8, 10),
+            (9, 10),
+            (8, 11),
+            (8, 12),
+        ]
+    )
+
+    return G
 
 
 @pytest.fixture
@@ -485,6 +943,530 @@ def graph_after_seventh_production(start_graph, production1):
 
     return G
 
+
+@pytest.fixture
+def graph_before_eighth_production(start_graph, production8):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=(0.25, 0.25), level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=(0.75, 0.75), level=1
+                    )
+                ),
+            ),
+            (
+                7,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.25, 0.25), level=2
+                    )
+                ),
+            ),
+            (
+                8,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.25, 0.75), level=2
+                    )
+                ),
+            ),
+            (
+                9,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.75, 0.25), level=2
+                    )
+                ),
+            ),
+            (
+                10,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.75, 0.75), level=2
+                    )
+                ),
+            ),
+            (
+                11,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                12,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=2
+                    )
+                ),
+            ),
+
+            (
+                13,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                14,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                15,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.5, 0.5), level=2
+                    )
+                ),
+            ),
+            (
+                16,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.5, 0.5), level=2
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+
+            (1, 2),
+            (1, 3),
+            (1, 4),
+            (1, 5),
+            (1, 6),
+
+            (2, 3),
+            (2, 6),
+
+            (3, 4),
+            (3, 5),
+            (3, 6),
+
+            (4, 5),
+
+            (5, 7),
+            (5, 8),
+
+            (6, 9),
+            (6, 10),
+
+            (7, 11),
+            (7, 12),
+            (7, 15),
+
+            (8, 11),
+            (8, 14),
+            (8, 15),
+
+            (9, 12),
+            (9, 13),
+            (9, 16),
+
+            (10, 13),
+            (10, 14),
+            (10, 16),
+
+            (11, 12),
+            (11, 14),
+            (11, 15),
+
+            (12, 13),
+            (12, 15),
+            (12, 16),
+
+            (13, 14),
+            (13, 16),
+
+            (14, 15),
+            (14, 16),
+        ]
+    )
+
+    return G
+
+
+@pytest.fixture
+def graph_after_eighth_production(start_graph, production8):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=(0.25, 0.25), level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=(0.75, 0.75), level=1
+                    )
+                ),
+            ),
+            (
+                7,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.25, 0.25), level=2
+                    )
+                ),
+            ),
+            (
+                8,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.25, 0.75), level=2
+                    )
+                ),
+            ),
+            (
+                9,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.75, 0.25), level=2
+                    )
+                ),
+            ),
+            (
+                10,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=(0.75, 0.75), level=2
+                    )
+                ),
+            ),
+            (
+                11,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                12,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=2
+                    )
+                ),
+            ),
+
+            (
+                13,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                14,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                17,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.5, 0.5), level=2
+                    )
+                ),
+            ),
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+
+            (1, 2),
+            (1, 3),
+            (1, 4),
+            (1, 5),
+            (1, 6),
+
+            (2, 3),
+            (2, 6),
+
+            (3, 4),
+            (3, 5),
+            (3, 6),
+
+            (4, 5),
+
+            (5, 7),
+            (5, 8),
+
+            (6, 9),
+            (6, 10),
+
+            (7, 11),
+            (7, 12),
+            (7, 17),
+
+            (8, 11),
+            (8, 14),
+            (8, 17),
+
+            (9, 12),
+            (9, 13),
+            (9, 17),
+
+            (10, 13),
+            (10, 14),
+            (10, 17),
+
+            (11, 12),
+            (11, 14),
+            (11, 17),
+
+            (12, 13),
+            (12, 17),
+
+            (13, 14),
+            (13, 17),
+
+            (14, 17),
+        ]
+    )
+
+    return G
+
+@pytest.fixture
+def graph_after_ninth_production(start_graph, production9):
+    G = nx.Graph()
+    G.add_nodes_from(
+        [
+            (
+                0,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.START_USED, position=(0.5, 0.5), level=0
+                    )
+                ),
+            ),
+            (
+                1,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                2,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                3,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=1
+                    )
+                ),
+            ),
+            (
+                4,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 1.0), level=1
+                    )
+                ),
+            ),
+            (
+                5,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR_USED, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                6,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=1
+                    )
+                ),
+            ),
+            (
+                7,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                8,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(0.0, 1.0), level=2
+                    )
+                ),
+            ),
+            (
+                9,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.EXTERIOR, position=(1.0, 0.0), level=2
+                    )
+                ),
+            ),
+            (
+                10,
+                dataclasses.asdict(
+                    VertexParams(
+                        vertex_type=VertexType.INTERIOR, position=None, level=2
+                    )
+                ),
+            )
+        ]
+    )
+
+    G.add_edges_from(
+        [
+            (0, 5),
+            (0, 6),
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (2, 4),
+            (3, 4),
+            (1, 5),
+            (2, 5),
+            (3, 5),
+            (2, 6),
+            (3, 6),
+            (4, 6),
+            (5, 10),
+            (7, 10),
+            (7, 8),
+            (7, 9),
+            (8, 9),
+            (8, 10),
+            (10, 9)
+        ]
+    )
+
+    return G
 
 @pytest.fixture
 def graph_for_p10():
